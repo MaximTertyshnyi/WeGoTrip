@@ -4,12 +4,14 @@ import profileAvatar from "../assets/profileAvatar.svg";
 import { Button } from "../common/Button";
 import { TbHandClick } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const ContainerLayout = styled.div`
-  width: 100%;
+  width: 20%;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  margin: 0;
+  border-right: 0.1px solid #e5e5e5;
 `;
 
 const ProfileContainer = styled.div`
@@ -25,10 +27,12 @@ const Form = styled.div`
   flex-direction: column;
   gap: 8px;
   text-align: center;
+  margin-top: 48px;
+  margin-bottom: 40px;
 `;
 
 const StyleImg = styled.img`
-  width: 220px;
+  width: 83px;
   margin: 0 auto;
 
   @media (max-width: 380px) {
@@ -73,38 +77,34 @@ const TextiInformation = styled.div`
   }
 `;
 
-export const ProfileScreen = () => {
+export function MenuNavigation() {
+  const [btnState, setbtnState] = useState(false);
   const navigate = useNavigate();
 
   const completeFormStep = () => {
-    navigate("/reportsscreen");
+    setbtnState((btnState) => !btnState);
+    // navigate("/profilescreen");
   };
+
+  let toggleClassCheck = btnState ? " active " : "";
+
   return (
     <ContainerLayout>
-      <ScreenHeader />
+      <Form>
+        <StyleImg src={profileAvatar} />
+        <TextName>Борис веркс</TextName>
+        <TextRating>Рейтинг 4.4</TextRating>
+      </Form>
 
-      <ProfileContainer>
-        <Form>
-          <StyleImg src={profileAvatar} />
-          <TextName>Борис веркс</TextName>
-          <TextRating>Рейтинг 4.4</TextRating>
-        </Form>
-
-        <TextiInformation>
-          Гарри Поттер (англ. Harry Potter) — главный герой одноименной серии
-          книг, маг, Мальчик-который-выжил. Известен своим противостоянием с
-          темным волшебником лордом Волдемортом, расправившимся с родителями
-          Гарри и чуть не погибшим при попытке убить их годовалого малыша. После
-          этого происшествия на лбу у Гарри остался шрам в виде молнии. Через 17
-          лет Поттер сокрушил возродившегося Темного Лорда во время штурма
-          магической школы Хогвартс.
-        </TextiInformation>
-        <Button
-          onClick={completeFormStep}
-          icon={<TbHandClick />}
-          buttonText={"Отчеты"}
-        />
-      </ProfileContainer>
+      <Button
+        className={toggleClassCheck}
+        onClick={completeFormStep}
+        buttonText={"Отчеты"}
+      />
+      <Button buttonText={"Туры"} />
+      <Button buttonText={"Отзывы"} />
+      <Button buttonText={"Справочный центр"} />
+      <Button buttonText={"Профиль и реквизиты"} />
     </ContainerLayout>
   );
-};
+}

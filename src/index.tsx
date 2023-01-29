@@ -3,13 +3,17 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { ProfileScreen } from "./screens/ProfileScreen";
 import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter } from "react-router-dom";
+import { AppRoot } from "./AppRoot";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <ProfileScreen />
+    <BrowserRouter>
+      <AppRoot />
+    </BrowserRouter>
   </React.StrictMode>
 );
 
