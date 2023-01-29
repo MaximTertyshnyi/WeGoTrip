@@ -3,6 +3,8 @@ import { ScreenHeader } from "../components/Header";
 import profileAvatar from "../assets/profileAvatar.svg";
 import { Button } from "../common/Button";
 import { TbHandClick } from "react-icons/tb";
+import { MenuNavigation } from "../components/MenuNavigation";
+import { ReportsContainer } from "../components/ReportsContainer";
 
 const ContainerLayout = styled.div`
   width: 100%;
@@ -11,12 +13,8 @@ const ContainerLayout = styled.div`
   margin: 0 auto;
 `;
 
-const ProfileContainer = styled.div`
+const Container = styled.div`
   display: flex;
-  width: 400px;
-  flex-direction: column;
-  text-align: center;
-  margin: 100px auto 0 auto;
 `;
 
 const Form = styled.div`
@@ -76,25 +74,10 @@ export function ReportsScreen() {
   return (
     <ContainerLayout>
       <ScreenHeader />
-
-      <ProfileContainer>
-        <Form>
-          <StyleImg src={profileAvatar} />
-          <TextName>Борис веркс</TextName>
-          <TextRating>Рейтинг 4.4</TextRating>
-        </Form>
-
-        <TextiInformation>
-          Гарри Поттер (англ. Harry Potter) — главный герой одноименной серии
-          книг, маг, Мальчик-который-выжил. Известен своим противостоянием с
-          темным волшебником лордом Волдемортом, расправившимся с родителями
-          Гарри и чуть не погибшим при попытке убить их годовалого малыша. После
-          этого происшествия на лбу у Гарри остался шрам в виде молнии. Через 17
-          лет Поттер сокрушил возродившегося Темного Лорда во время штурма
-          магической школы Хогвартс.
-        </TextiInformation>
-        <Button icon={<TbHandClick />} buttonText={"Отчеты"} />
-      </ProfileContainer>
+      <Container>
+        <MenuNavigation />
+        <ReportsContainer />
+      </Container>
     </ContainerLayout>
   );
 }
