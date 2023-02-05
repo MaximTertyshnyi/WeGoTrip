@@ -27,23 +27,13 @@ function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
   };
 
   return (
@@ -100,50 +90,3 @@ function ResponsiveAppBar() {
   );
 }
 export default ResponsiveAppBar;
-
-// import wegotripLogo from "../assets/wegotripLogo.svg";
-// import { COLORS } from "../const/colors";
-
-// const Header = styled.div`
-//   height: 100px;
-//   background: ${COLORS.MAIN};
-//   align-items: center;
-//   display: flex;
-
-//   @media (max-width: 380px) {
-//     height: 60px;
-//   }
-// `;
-
-// const Logo = styled.img`
-//   width: 85px;
-//   height: 41px;
-
-//   @media (max-width: 380px) {
-//     width: 40px;
-//   }
-// `;
-
-// const ContainerHeader = styled.div`
-//   display: flex;
-//   width: 100%;
-//   margin: 0 32px 0 32px;
-//   flex-direction: row;
-//   align-items: center;
-//   text-align: center;
-//   justify-content: space-between;
-
-//   @media (max-width: 380px) {
-//     margin: 0 20px 0 20px;
-//   }
-// `;
-
-// export const ScreenHeader = () => {
-//   return (
-//     <Header>
-//       <ContainerHeader>
-//         <Logo src={wegotripLogo} />
-//       </ContainerHeader>
-//     </Header>
-//   );
-// };

@@ -1,18 +1,31 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
 import { BsCalendar } from "react-icons/bs";
+import ru from "date-fns/locale/ru";
+import { registerLocale } from "react-datepicker";
+import "../const/customDatePickerWidth.css";
 
 import "../index.css";
 import { COLORS } from "../const/colors";
+import { dateStringToRussianFormat, getPrevYear } from "../helpers";
+
+registerLocale("ru", ru);
 
 const ButtonContainer = styled.div`
   display: flex;
-  width: 500px;
+  justify-content: flex-end;
   text-align: center;
   align-items: center;
   margin: 33px 32px 100px auto;
+
+  @media (max-width: 1220px) {
+    flex-direction: column;
+    width: auto;
+    gap: 20px;
+    margin: 33px auto 60px auto;
+  }
 
   @media (max-width: 890px) {
     flex-direction: column;
@@ -26,14 +39,15 @@ const StyledDatePicker = styled(DatePicker)`
 `;
 
 const StyledCalendarIcon = styled(BsCalendar)`
-  width: 100%;
+  font-size: 22px;
+  margin-right: 5px;
   color: ${COLORS.SECONDARY_BLACK};
 `;
 
 const ConnectingText = styled.div`
   font-size: 14px;
   color: ${COLORS.SECONDARY_BLACK};
-  margin: 0 10px;
+  margin: 0 35px;
 `;
 
 const DateContainer = styled.div`
@@ -57,63 +71,63 @@ const GraphDatePicker = ({
     handleChangeEndDate(new Date(endDate).toLocaleDateString("fr-CA"));
   }, [startDate, endDate]);
 
+  // приведение endDate даты к формату РУ
+  const endDateLastYearInRusFormat = useMemo(() => {
+    const dateStringInFrCa = endDate.toLocaleDateString("fr-CA");
+    const lastYearDateStringInFrCa = getPrevYear(dateStringInFrCa);
+    return dateStringToRussianFormat(lastYearDateStringInFrCa);
+  }, [dateStringToRussianFormat, endDate]);
+
+  // приведение startDate даты к формату РУ
+  const startDateLastYearInRusFormat = useMemo(() => {
+    const dateStringInFrCa = startDate.toLocaleDateString("fr-CA");
+    const lastYearDateStringInFrCa = getPrevYear(dateStringInFrCa);
+    return dateStringToRussianFormat(lastYearDateStringInFrCa);
+  }, [dateStringToRussianFormat, startDate]);
+
   return (
     <ButtonContainer>
       <DateContainer>
         <StyledCalendarIcon />
-        <StyledDatePicker
-          selected={startDate}
-          onChange={(date: Date) => {
-            setStartDate(date);
-          }}
-          selectsStart
-          startDate={startDate}
-          endDate={endDate}
-          dateFormat="dd MMMM yyyy"
-          // уверен что тут нужен этот класс?
-          className="reat"
-        />
+        <div className="customDatePickerWidth">
+          <StyledDatePicker
+            locale="ru"
+            selected={startDate}
+            onChange={(date: Date) => {
+              setStartDate(date);
+            }}
+            selectsStart
+            startDate={startDate}
+            endDate={endDate}
+            dateFormat="dd MMMM yyyy"
+            className="reat"
+          />
+        </div>
         <ConnectingText>—</ConnectingText>
         <StyledCalendarIcon />
-        <StyledDatePicker
-          selected={endDate}
-          onChange={(date: Date) => {
-            setEndDate(date);
-          }}
-          selectsEnd
-          startDate={startDate}
-          endDate={endDate}
-          minDate={startDate}
-          dateFormat="dd MMMM yyyy"
-          // уверен что тут нужен этот класс?
-          className="reat"
-        />
+        <div className="customDatePickerWidth">
+          <StyledDatePicker
+            locale="ru"
+            selected={endDate}
+            onChange={(date: Date) => {
+              setEndDate(date);
+            }}
+            selectsEnd
+            startDate={startDate}
+            endDate={endDate}
+            minDate={startDate}
+            dateFormat="dd MMMM yyyy"
+            className="reat"
+          />
+        </div>
       </DateContainer>
       <ConnectingText>vs</ConnectingText>
-      <DateContainer>
+      <DateContainer className="reat">
         <StyledCalendarIcon />
-        {/* <DatePickerCustom
-        selected={startVsDate}
-        onChange={(date) => setStartDate(date)}
-        selectsStart
-        startDate={startVsDate}
-        endDate={endVsDate}
-        dateFormat="dd MMMM yyyy"
-        className="reat"
-      /> */}
+        {startDateLastYearInRusFormat}
         <ConnectingText>—</ConnectingText>
         <StyledCalendarIcon />
-        {/* <DatePickerCustom
-        selected={endVsDate}
-        // onChange={(date) => setStartDate(date)}
-        onChange={data :}
-        selectsEnd
-        startDate={startVsDate}
-        endDate={endVsDate}
-        minDate={startVsDate}
-        dateFormat="dd MMMM yyyy"
-        className="reat"
-      /> */}
+        {endDateLastYearInRusFormat}
       </DateContainer>
     </ButtonContainer>
   );

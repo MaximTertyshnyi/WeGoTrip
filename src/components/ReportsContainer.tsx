@@ -56,11 +56,11 @@ export function ReportsContainer() {
     <ContainerLayout>
       <BlockName>Отчеты</BlockName>
       <ButtonContainer>
-        <Button buttonText="Сводка" />
-        <Button secondary buttonText="Продажи" />
-        <Button secondary buttonText="Установки" />
-        <Button secondary buttonText="Просмотры" />
-        <Button secondary buttonText="Выплаты" />
+        <Button secondary buttonText="Сводка" />
+        <Button buttonText="Продажи" />
+        <Button buttonText="Установки" />
+        <Button buttonText="Просмотры" />
+        <Button buttonText="Выплаты" />
       </ButtonContainer>
       <Graphics />
     </ContainerLayout>
