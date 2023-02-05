@@ -1,8 +1,21 @@
-export function getPrevYear(dateStr: string) {
+export function getPrevYear(dateStr: string) { // date format - 2020-01-01
   return (parseInt(dateStr.slice(0, 4)) - 1) + dateStr.slice(4);
 }
+const options: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+};
 
-function dateStrToInt(dateStr: string): number {
+export function dateStringToRussianFormat (date: string) {
+  return (new Date(date).toLocaleString("ru-RU", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).replace(/\s*г\./, ""))
+}
+
+export function dateStrToInt(dateStr: string): number {
   return parseInt(dateStr.replaceAll('-', ''));
 }
 

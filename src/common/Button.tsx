@@ -34,6 +34,10 @@ const SmallSpace = styled.div`
   margin-left: 8px;
 `;
 
+const Container = styled.div<{ active?: boolean }>`
+  margin-left: 8px;
+`;
+
 const IconButtonWithText = styled(BaseButton)<{
   secondary?: boolean;
   active?: boolean;
@@ -51,15 +55,13 @@ const TextButton = styled.div<{ secondary?: boolean; active?: boolean }>`
   line-height: 24px;
   font-weight: 500;
   align-items: center;
-  /* color: ${COLORS.BLACK}; */
-  color: ${(props: any) =>
-    props.secondary ? COLORS.SECONDARY_GRAY : COLORS.BLUE};
+  padding-left: 10px;
+  color: ${(props: any) => (props.secondary ? COLORS.BLUE : COLORS.BLACK)};
 
-  text-decoration: underline
-    ${(props: any) => (props.active ? COLORS.BLUE : "none")};
-  /* border: none; */
+  border-bottom: 1px solid
+    ${(props: any) => (props.secondary ? COLORS.BLUE : "none")};
+
   cursor: pointer;
-  padding-left: 16px;
   background: ${(props: any) =>
     props.active ? COLORS.BUTTON_ACTIVE : COLORS.WHITE};
 
@@ -91,8 +93,10 @@ export const Button = (props: ButtonProps) => {
   }
 
   return (
-    <TextButton secondary={secondary} active={active} onClick={onClick}>
-      {buttonText}
-    </TextButton>
+    <>
+      <TextButton active={active} secondary={secondary} onClick={onClick}>
+        {buttonText}
+      </TextButton>
+    </>
   );
 };

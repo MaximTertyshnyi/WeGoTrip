@@ -85,10 +85,10 @@ export function MenuNavigation() {
       </PhotoAndNameContainer>
       <Layout>
         <Button active buttonText="Отчеты" />
-        <Button secondary buttonText="Туры" />
-        <Button secondary buttonText="Отзывы" />
-        <Button secondary buttonText="Справочный центр" />
-        <Button secondary buttonText="Профиль и реквизиты" />
+        <Button buttonText="Туры" />
+        <Button buttonText="Отзывы" />
+        <Button buttonText="Справочный центр" />
+        <Button buttonText="Профиль и реквизиты" />
       </Layout>
     </ContainerLayout>
   );

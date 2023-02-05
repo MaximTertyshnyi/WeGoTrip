@@ -1,8 +1,12 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import styled from "styled-components";
 import { BarChart, Bar, ResponsiveContainer } from "recharts";
 import { GraphDatePicker } from "./GraphDatePicker";
-import { getArrayBetweenDates, getPrevYear } from "../helpers";
+import {
+  dateStringToRussianFormat,
+  getArrayBetweenDates,
+  getPrevYear,
+} from "../helpers";
 import { getStats, IResponse } from "../api/stats";
 import { useQuery } from "@tanstack/react-query";
 import { COLORS } from "../const/colors";
@@ -33,7 +37,7 @@ const ContainerBarChart = styled.div`
   }
 
   @media (max-width: 700px) {
-    height: 215px;
+    height: 265px;
     width: 300px;
     margin: 0 auto;
   }
@@ -91,20 +95,6 @@ export const Graphics = () => {
   const [startDateStr, setStartDateStr] = useState("");
   const [endDateStr, setEndDateStr] = useState("");
 
-  // const [displayClick, setDisplayClick] = useState<unknown[]>([]);
-
-  ////// расчет процентов всех кликов
-  // const [lastYearSummClicksAndViews, setlastYearSummClicksAndViews] =
-  //   useState(0);
-
-  // ////// расчет отображения преобразований "из - в" для кликов
-  // const [summClicks, setSummClicks] = useState(0);
-  // const [lastYearSummClicks, setlastYearSummClicks] = useState(0);
-
-  // ////// расчет отображения преобразований "из - в" для просмотров
-  // const [summViews, setSummViews] = useState(0);
-  // const [lastYearSummViews, setlastYearSummViews] = useState(0);
-
   function handleChangeStartDate(dateStr: string) {
     setStartDateStr(dateStr);
   }
@@ -112,6 +102,18 @@ export const Graphics = () => {
   function handleChangeEndDate(dateStr: string) {
     setEndDateStr(dateStr);
   }
+
+  // endDate, которая прокидывается под график
+  const endDateLastYearInRusFormat = useMemo(() => {
+    const dateStringInFrCa = new Date(endDateStr).toLocaleDateString("fr-CA");
+    return dateStringToRussianFormat(dateStringInFrCa);
+  }, [dateStringToRussianFormat, endDateStr]);
+
+  // startDate, которая прокидывается под график
+  const startDateLastYearInRusFormat = useMemo(() => {
+    const dateStringInFrCa = new Date(startDateStr).toLocaleDateString("fr-CA");
+    return dateStringToRussianFormat(dateStringInFrCa);
+  }, [dateStringToRussianFormat, startDateStr]);
 
   // массив продаж которые нам надо показать на графике
   const rangePurchases = useMemo(() => {
@@ -164,8 +166,7 @@ export const Graphics = () => {
     );
   }, [lastYearRangePurchases]);
 
-  ///////////// второй график с кликами
-
+  // второй график с кликами  и просмотрами
   // массив просмотров и кликов которые нам надо показать на графике
   const rangeViewsAndClicks = useMemo(() => {
     if (startDateStr && endDateStr && statsData) {
@@ -249,7 +250,6 @@ export const Graphics = () => {
         handleChangeStartDate={handleChangeStartDate}
         handleChangeEndDate={handleChangeEndDate}
       />
-      {/*  предлагаю вынести каждый из графиков в отдельный компонент, чтобы верстки тут было меньше */}
       <Container>
         {displayData && (
           <ContainerBarChart>
@@ -271,6 +271,10 @@ export const Graphics = () => {
                 <Bar dataKey="lastYearValue" stackId="a" fill="#b6deff" />
               </BarChart>
             </ResponsiveContainer>
+            <DifferencePreviousYear style={{ marginTop: -30 }}>
+              <ReportText>{startDateLastYearInRusFormat}</ReportText>
+              <ReportText>{endDateLastYearInRusFormat}</ReportText>
+            </DifferencePreviousYear>
           </ContainerBarChart>
         )}
 
@@ -290,15 +294,15 @@ export const Graphics = () => {
               </DifferencePreviousYear>
             </div>
             <ResponsiveContainer width="100%" height={135}>
-              <BarChart
-                // width={600} height={135}
-                data={displayClick}
-                barSize={15}
-              >
+              <BarChart data={displayClick} barSize={15}>
                 <Bar dataKey="valueAndClicks" stackId="a" fill="#64B6F7" />
                 <Bar dataKey="lastYearValue" stackId="a" fill="#b6deff" />
               </BarChart>
             </ResponsiveContainer>
+            <DifferencePreviousYear>
+              <ReportText>{startDateLastYearInRusFormat}</ReportText>
+              <ReportText>{endDateLastYearInRusFormat}</ReportText>
+            </DifferencePreviousYear>
           </ContainerBarChart>
         )}
       </Container>
