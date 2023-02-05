@@ -1,9 +1,12 @@
 import styled from "styled-components";
-import { ScreenHeader } from "../components/Header";
+import ResponsiveAppBar from "../components/Header";
 import profileAvatar from "../assets/profileAvatar.svg";
 import { Button } from "../common/Button";
 import { TbHandClick } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+import { useCallback } from "react";
+import { ROUTES } from "../const/routes";
+import { COLORS } from "../const/colors";
 
 const ContainerLayout = styled.div`
   width: 100%;
@@ -20,7 +23,7 @@ const ProfileContainer = styled.div`
   margin: 100px auto 0 auto;
 `;
 
-const Form = styled.div`
+const PhotoAndNameContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -30,35 +33,19 @@ const Form = styled.div`
 const StyleImg = styled.img`
   width: 220px;
   margin: 0 auto;
-
-  @media (max-width: 380px) {
-    width: 360px;
-    height: 360px;
-    object-fit: cover;
-  }
 `;
 
 const TextName = styled.div`
   font-weight: 500;
   font-size: 14px;
   line-height: 22px;
-
-  @media (max-width: 380px) {
-    font-size: 24px;
-    line-height: 31px;
-  }
 `;
 
 const TextRating = styled.div`
   font-weight: 400;
   font-size: 12px;
   line-height: 19px;
-  color: rgba(0, 0, 0, 0.54);
-
-  @media (max-width: 380px) {
-    font-size: 24px;
-    line-height: 31px;
-  }
+  color: ${COLORS.SECONDARY_BLACK};
 `;
 
 const TextiInformation = styled.div`
@@ -66,29 +53,25 @@ const TextiInformation = styled.div`
   font-size: 14px;
   line-height: 22px;
   margin: 50px 0;
-
-  @media (max-width: 380px) {
-    font-size: 24px;
-    line-height: 31px;
-  }
 `;
 
 export const ProfileScreen = () => {
   const navigate = useNavigate();
 
-  const completeFormStep = () => {
-    navigate("/reportsscreen");
-  };
+  const completeStep = useCallback(() => {
+    navigate(ROUTES.reports);
+  }, [navigate]);
+
   return (
     <ContainerLayout>
-      <ScreenHeader />
+      <ResponsiveAppBar />
 
       <ProfileContainer>
-        <Form>
+        <PhotoAndNameContainer>
           <StyleImg src={profileAvatar} />
           <TextName>Борис веркс</TextName>
           <TextRating>Рейтинг 4.4</TextRating>
-        </Form>
+        </PhotoAndNameContainer>
 
         <TextiInformation>
           Гарри Поттер (англ. Harry Potter) — главный герой одноименной серии
@@ -100,9 +83,9 @@ export const ProfileScreen = () => {
           магической школы Хогвартс.
         </TextiInformation>
         <Button
-          onClick={completeFormStep}
+          onClick={completeStep}
           icon={<TbHandClick />}
-          buttonText={"Отчеты"}
+          buttonText="Отчеты"
         />
       </ProfileContainer>
     </ContainerLayout>

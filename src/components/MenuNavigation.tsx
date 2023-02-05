@@ -1,43 +1,57 @@
 import styled from "styled-components";
-import { ScreenHeader } from "../components/Header";
 import profileAvatar from "../assets/profileAvatar.svg";
 import { Button } from "../common/Button";
-import { TbHandClick } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useCallback } from "react";
+import { ROUTES } from "../const/routes";
+import { COLORS } from "../const/colors";
 
 const ContainerLayout = styled.div`
   width: 20%;
   display: flex;
   flex-direction: column;
   margin: 0;
-  border-right: 0.1px solid #e5e5e5;
+  border-right: 0.1px solid ${COLORS.BORDER_GRAY};
+
+  @media (max-width: 1200px) {
+    width: 30%;
+  }
+
+  @media (max-width: 890px) {
+    z-index: 1;
+    flex-direction: row;
+    width: auto;
+  }
 `;
 
-const ProfileContainer = styled.div`
-  display: flex;
-  width: 400px;
-  flex-direction: column;
-  text-align: center;
-  margin: 100px auto 0 auto;
+const Layout = styled.div`
+  @media (max-width: 890px) {
+    display: none;
+  }
 `;
 
-const Form = styled.div`
+const PhotoAndNameContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
   text-align: center;
   margin-top: 48px;
   margin-bottom: 40px;
+  cursor: pointer;
+
+  @media (max-width: 890px) {
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 
 const StyleImg = styled.img`
   width: 83px;
   margin: 0 auto;
 
-  @media (max-width: 380px) {
-    width: 360px;
-    height: 360px;
+  @media (max-width: 890px) {
+    width: 160px;
+    height: 160px;
     object-fit: cover;
   }
 `;
@@ -46,65 +60,36 @@ const TextName = styled.div`
   font-weight: 500;
   font-size: 14px;
   line-height: 22px;
-
-  @media (max-width: 380px) {
-    font-size: 24px;
-    line-height: 31px;
-  }
 `;
 
 const TextRating = styled.div`
   font-weight: 400;
   font-size: 12px;
   line-height: 19px;
-  color: rgba(0, 0, 0, 0.54);
-
-  @media (max-width: 380px) {
-    font-size: 24px;
-    line-height: 31px;
-  }
-`;
-
-const TextiInformation = styled.div`
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 22px;
-  margin: 50px 0;
-
-  @media (max-width: 380px) {
-    font-size: 24px;
-    line-height: 31px;
-  }
+  color: ${COLORS.SECONDARY_BLACK};
 `;
 
 export function MenuNavigation() {
-  const [btnState, setbtnState] = useState(false);
   const navigate = useNavigate();
 
-  const completeFormStep = () => {
-    setbtnState((btnState) => !btnState);
-    // navigate("/profilescreen");
-  };
-
-  let toggleClassCheck = btnState ? " active " : "";
+  const previousStep = useCallback(() => {
+    navigate(ROUTES.profile);
+  }, [navigate]);
 
   return (
     <ContainerLayout>
-      <Form>
+      <PhotoAndNameContainer onClick={previousStep}>
         <StyleImg src={profileAvatar} />
         <TextName>Борис веркс</TextName>
         <TextRating>Рейтинг 4.4</TextRating>
-      </Form>
-
-      <Button
-        className={toggleClassCheck}
-        onClick={completeFormStep}
-        buttonText={"Отчеты"}
-      />
-      <Button buttonText={"Туры"} />
-      <Button buttonText={"Отзывы"} />
-      <Button buttonText={"Справочный центр"} />
-      <Button buttonText={"Профиль и реквизиты"} />
+      </PhotoAndNameContainer>
+      <Layout>
+        <Button active buttonText="Отчеты" />
+        <Button secondary buttonText="Туры" />
+        <Button secondary buttonText="Отзывы" />
+        <Button secondary buttonText="Справочный центр" />
+        <Button secondary buttonText="Профиль и реквизиты" />
+      </Layout>
     </ContainerLayout>
   );
 }
