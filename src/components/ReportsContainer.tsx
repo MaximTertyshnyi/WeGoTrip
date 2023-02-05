@@ -1,10 +1,6 @@
 import styled from "styled-components";
-import { ScreenHeader } from "../components/Header";
-import profileAvatar from "../assets/profileAvatar.svg";
 import { Button } from "../common/Button";
-import { TbHandClick } from "react-icons/tb";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Graphics } from "./Graphics";
 
 const ContainerLayout = styled.div`
   width: 80%;
@@ -12,88 +8,46 @@ const ContainerLayout = styled.div`
   flex-direction: column;
   margin: 0;
   padding: 0 32px;
-`;
 
-const ButtonContainer = styled.div`
-  display: flex;
-  text-align: center;
-  /* margin: 100px auto 0 auto; */
-`;
-
-const GraphContainer = styled.div`
-  display: flex;
-  text-align: center;
-  /* margin: 100px auto 0 auto; */
-`;
-
-const ButtonNavigation = styled(Button)`
-  width: 133px;
-  display: flex;
-  height: 48px;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-  align-items: center;
-  color: rgba(0, 0, 0, 0.87);
-  border: none;
-  cursor: pointer;
-  padding-left: 16px;
-`;
-
-const TextName = styled.div`
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 22px;
-
-  @media (max-width: 380px) {
-    font-size: 24px;
-    line-height: 31px;
+  @media (max-width: 1630px) {
+    margin-bottom: 100px;
+    width: 70%;
   }
-`;
 
-const StyleImg = styled.img`
-  width: 83px;
-  margin: 0 auto;
-
-  @media (max-width: 380px) {
-    width: 360px;
-    height: 360px;
-    object-fit: cover;
+  @media (max-width: 890px) {
+    width: auto;
   }
 `;
 
 const BlockName = styled.div`
   font-weight: 400;
   font-size: 24px;
-  margin: 40px auto 16px 32px;
+  margin: 40px auto 16px 12px;
 
-  @media (max-width: 380px) {
+  @media (max-width: 890px) {
     font-size: 24px;
     line-height: 31px;
+    margin: 40px auto 16px auto;
   }
 `;
 
-const TextRating = styled.div`
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 19px;
-  color: rgba(0, 0, 0, 0.54);
+const ButtonContainer = styled.div`
+  display: flex;
+  text-align: center;
+  gap: 67px;
+  text-transform: uppercase;
 
-  @media (max-width: 380px) {
-    font-size: 24px;
-    line-height: 31px;
+  @media (max-width: 1200px) {
+    gap: 30px;
   }
-`;
 
-const TextiInformation = styled.div`
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 22px;
-  margin: 50px 0;
+  @media (max-width: 890px) {
+    margin: 0 auto;
+    gap: 15px;
+  }
 
-  @media (max-width: 380px) {
-    font-size: 24px;
-    line-height: 31px;
+  @media (max-width: 680px) {
+    gap: 5px;
   }
 `;
 
@@ -102,13 +56,13 @@ export function ReportsContainer() {
     <ContainerLayout>
       <BlockName>Отчеты</BlockName>
       <ButtonContainer>
-        <Button style={{ width: 133 }} buttonText={"Отчеты"} />
-        <Button buttonText={"Туры"} />
-        <Button buttonText={"Отзывы"} />
-        <Button buttonText={"Справочный центр"} />
-        <Button buttonText={"Профиль и реквизиты"} />
+        <Button buttonText="Сводка" />
+        <Button secondary buttonText="Продажи" />
+        <Button secondary buttonText="Установки" />
+        <Button secondary buttonText="Просмотры" />
+        <Button secondary buttonText="Выплаты" />
       </ButtonContainer>
-      <GraphContainer></GraphContainer>
+      <Graphics />
     </ContainerLayout>
   );
 }

@@ -3,6 +3,7 @@ body {
   font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 code {
@@ -12,4 +13,12 @@ code {
 
 .btn.active {
   background: rgba(0, 125, 255, 0.08);
+}
+
+.reat{
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.54);
+  line-height: 20px;
+  cursor: pointer;
 }

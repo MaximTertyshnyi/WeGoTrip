@@ -1,22 +1,20 @@
 import React, { ReactElement, useState } from "react";
 import styled, { CSSProperties } from "styled-components";
+import { COLORS } from "../const/colors";
 import "../index.css";
 
 export interface ButtonProps {
   onClick?: () => void;
   activeClick?: () => boolean;
-  buttonStyle?: CSSProperties;
   style?: CSSProperties;
   className?: string;
   buttonText?: string;
   icon?: ReactElement;
-  isIconWithText?: boolean;
-  children?: any;
-  color?: string;
   active?: boolean;
+  secondary?: boolean;
 }
 
-const BaseButton = styled.button`
+const BaseButton = styled.button<{ secondary?: boolean; active?: boolean }>`
   width: 100%;
   height: 48px;
   border-radius: 16px;
@@ -26,8 +24,8 @@ const BaseButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: black;
-  color: white;
+  background: ${COLORS.BLACK};
+  color: ${COLORS.BLACK};
   border: none;
   cursor: pointer;
 `;
@@ -36,48 +34,55 @@ const SmallSpace = styled.div`
   margin-left: 8px;
 `;
 
-const IconButtonWithText = styled(BaseButton)`
+const IconButtonWithText = styled(BaseButton)<{
+  secondary?: boolean;
+  active?: boolean;
+}>`
   justify-content: center;
   font-weight: 700;
-  color: white;
-  background: black;
+  color: ${COLORS.WHITE};
+  background: ${COLORS.BLACK};
 `;
 
-const TextButton = styled.div`
+const TextButton = styled.div<{ secondary?: boolean; active?: boolean }>`
   display: flex;
   height: 48px;
   font-size: 16px;
   line-height: 24px;
-  font-weight: 400;
+  font-weight: 500;
   align-items: center;
-  color: rgba(0, 0, 0, 0.87);
-  border: none;
+  /* color: ${COLORS.BLACK}; */
+  color: ${(props: any) =>
+    props.secondary ? COLORS.SECONDARY_GRAY : COLORS.BLUE};
+
+  text-decoration: underline
+    ${(props: any) => (props.active ? COLORS.BLUE : "none")};
+  /* border: none; */
   cursor: pointer;
   padding-left: 16px;
-  background: white;
+  background: ${(props: any) =>
+    props.active ? COLORS.BUTTON_ACTIVE : COLORS.WHITE};
 
-  /* &:active {
-    background: rgba(0, 125, 255, 0.08);
-  } */
+  @media (max-width: 890px) {
+    font-size: 12px;
+  }
+
+  @media (max-width: 520px) {
+    font-size: 10px;
+  }
+
+  @media (max-width: 440px) {
+    font-size: 6px;
+  }
 `;
 
 export const Button = (props: ButtonProps) => {
-  const { className, onClick, buttonText, icon, style } = props;
-  //   const firstColor = "white";
-  //   const [color, setColor] = useState("");
-
-  //   const handleClick = (color: string) => {
-  //     if (color === firstColor) {
-  //       return setColor("rgba(0, 125, 255, 0.08)");
-  //     }
-  //     if (color !== firstColor) {
-  //       setColor("white");
-  //     }
-  //   };
+  const { className, onClick, buttonText, icon, style, active, secondary } =
+    props;
 
   if (icon && buttonText) {
     return (
-      <IconButtonWithText onClick={onClick} style={style}>
+      <IconButtonWithText className={className} onClick={onClick} style={style}>
         {icon}
         <SmallSpace />
         {buttonText}
@@ -85,5 +90,9 @@ export const Button = (props: ButtonProps) => {
     );
   }
 
-  return <TextButton onClick={onClick}>{buttonText}</TextButton>;
+  return (
+    <TextButton secondary={secondary} active={active} onClick={onClick}>
+      {buttonText}
+    </TextButton>
+  );
 };
